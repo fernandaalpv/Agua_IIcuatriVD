@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <title>Agua-Data Viz II</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        
+            <!--Mapbox-->
+                <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+                <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+                <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+            <!-- Carga AOS -->
+            <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+            <!-- Carga d3.js -->
+
+    <script src="https://d3js.org/d3.v4.js"></script>
+
+ <!--Estilo leyenda Mapbox-->   
+        <style> 
+            #square {
+                width: 10px;
+                height: 10px;
+                background-color: #9CE3EF;
+            }
+        
+            #square2 {
+                width: 10px;
+                height: 10px;
+                background-color: #15B2D6;
+            }
+        
+            #square3 {
+                width: 10px;
+                height: 10px;
+                background-color: #02749D;
+            }
+        
+            #square4 {
+                width: 10px;
+                height: 10px;
+                background-color: #013D66;
+            }
+        
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Barra Empieza -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">DATA VIZ II</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto">
+                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Barra Termina -->
+
+        <!-- Carrusel Empieza -->
+        <div class="carousel">
+            <div class="container-fluid">
+                <div class="owl-carousel">
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="img/carrusel1.jpg" alt="Image">
+                        </div>
+                        <div class="carousel-text">
+                            <h1>Estrés hídrico en México</h1>
+                            <p>
+                                8 de las 13 regiones hídricas del país padecen estrés hídrico y de los 653 acuíferos nacionales 157 están sobreexplotados.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="carousel-img">
+                            <img src="img/carrusel2.jpg" alt="Image">
+                        </div>
+                        <div class="carousel-text">
+                            <h1> 10 millones de personas </h1>
+                            <p>
+                                en el país no tienen acceso a agua diariamente y las zonas más afectadas son las periferias urbanas, marginales y el campo
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Carrusel Termina -->
+       
+        <!-- Acerca Empieza -->
+        <div class="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="about-img" data-parallax="scroll" data-image-src="img/Acercade.jpg"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="section-header">
+                            <p>Agua en México</p>
+                            <h2>La escasez del agua en el país</h2>
+                        </div>
+                        <div class="about-tab">
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#tab-content-1">Acerca</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="tab-content-1" class="container tab-pane active">
+                                    De los 653 acuíferos con disponibilidad de agua en el país, el 24% están sobreexplotados. Esto significa que extraemos más agua de la que permitimos que se produzca. </br></br>
+
+                                    En México, un poco más del 50% de la  población tiene garantizado el acceso a agua potable todos los días, mientras que el resto no tiene acceso o no lo reciben de manera continua y desconocen su calidad.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Acerca Termina -->      
+        
+        <!--Mapas Inicio-->
+
+        <!--Mapbox titulo, descripción y posición empieza-->
+        
+        <div  class="mapbox1">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="titlepage">
+                        <h2>Estrés hídrico</h2>
+                        <p>México</p>
+                     </div>
+                     <div id='map' style='width: 1000px; height: 400px;'></div>
+                     <div class='map-overlay' id='legend'> <!--Leyenda-->
+                         <h5>Nivel del estrés hídrico </h5>
+                         <h6>0 a 1</h6> 
+                         <div id= "square"></div>
+                         <h6>1 a 2</h6>
+                         <div id= "square2"></div>
+                         <h6>2 a 4</h6>
+                         <div id= "square3"></div>
+                         <h6>4+</h6>
+                         <div id= "square4"></div>
+                     </div>
+                   </div>
+               </div>
+            </div>
+         </div>
+
+        <!--Termina Mapbox titulo, descripción y posición-->
+
+            <!-- Grafica 1 Estres hidrico por estado-->
+    <div id="projects" class="basic-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-5">
+                    <div class="text-container">
+                        <h2>Sobreexplotación de los acuiferos </h2>
+                        <p>La explotación de los acuíferos del país ha ido en aumento, pasando de tan solo el 5% de acuiferos en esta situación en 1975 a 24% en 2019. Según datos de la organización Aqueduct, México se encuentra en el lugar número 24 en alto estrés hídrico, de 164 naciones que fueron estudiadas en 2019. Aunque el país no se encuentra en la categoría de "nivel extremo" de estrés hídrico como ciertas zonas de Medio Oriente y África del Norte si somos uno de los países de América Latina con mayor peligro de quedarnos sin agua.
+                            </p>
+                    </div> <!-- termina contenedor de texto -->
+                </div> <!-- termina columna -->
+                <div class="col-lg-6 col-xl-7">
+                    <div class="grafica1"> <!---cambiar por grafica-->
+                        <div id="grafica1"></div>
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+    <!-- Grafica 1 -->
+
+    <!-- Grafica 2 Calidad del agua -->
+    <div class="basic-3 bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-xl-7">
+                    <div class="grafica2">
+                        <div id="grafica2"></div>
+                    </div> <!-- termina contenedor de grafica -->
+                </div> <!-- end of col -->
+                <div class="col-lg-6 col-xl-5">
+                    <div class="text-container">
+                        <h2>Calidad del agua superficial en México </h2>
+                        <h3>Comisión Nacional del Agua 2020</h3>
+                        <p>El 36.3% de los sitios se catalogaron con color verde; es decir, los sitios cumplieron con los límites aceptables de calidad 
+                            del agua para los 8 parámetros analizados, el 32.5% de los sitios se catalogaron con color amarillo presentando incumplimiento 
+                            en uno o varios de los siguientes parámetros: E_COLI, CF, SST y OD%, el 31.2% de los sitios se catalogaron con color 
+                            rojo presentando incumplimiento en uno o varios de los siguientes parámetros: DBO5, DQO, TOX y ENTEROC.</p>
+                    </div> <!-- end of text-container -->
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of basic-3 -->
+    <!-- Termina Grafica 2 -->
+
+ <!-- Foto división Empieza -->
+            <div class="facts" data-parallax="scroll" data-image-src="img/datos.jpg"></div>
+ <!-- Foto división Termina -->    
+
+        <!-- Datos empieza -->
+        <div class="service">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2>Principales retos en materia de seguridad hídrica </br></br> </h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-text">
+                                <h3>La escasez de agua y el deterioro ambiental</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-text">
+                                <h3> La contaminación de los cuerpos de agual</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="service-item">
+                            <div class="service-text">
+                                <h3>Los conflictos por el agua</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Service End -->
+        
+        <!-- Conclusiones Empieza -->
+                <div class="conclusions">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12">
+                                <div class="conclusions-tab">
+                                    <div class="tab-content">
+                                        <div id="tab-content-1" class="container tab-pane active">
+                                            El agua es un recurso esencial, no solo para mantener la salud de los seres humanos sino de la vida silvestre. La escasez de agua es una realidad que impide que un gran número de personas no tenga acceso a agua potable por ello es necesario implementar acciones para cuidar los recursos de agua disponibles.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <!-- ConclusionesTermina -->
+
+        <!-- Footer Empieza -->
+         <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="footer-col first">
+                            <h4>Especialidad en Visualización de Datos</h4>
+                            <p class="p-small">María Fernanda López Vázquez <br> II Cuatrimestre <br> 
+                                Visualización efectiva para la comunicación II</p>
+                        </div>
+        <!-- Footer Termina -->   
+            
+        <!-- Back to top button -->
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <!-- Pre Loader -->
+        <div id="loader" class="show">
+            <div class="loader"></div>
+        </div>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/parallax/parallax.min.js"></script>
+        
+        <!-- Contact Javascript File -->
+        <script src="mail/jqBootstrapValidation.min.js"></script>
+        <script src="mail/contact.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+
+        <!-- Mapbox SCRIPT -->
+
+                <script>
+                    mapboxgl.accessToken = 'pk.eyJ1IjoiZmVybmFuZGFhbHB2IiwiYSI6ImNrcm1xMGthMDJ5a3EycG00aGQzdW9pNDgifQ.gCjmV561ekukBL59uI_Qpg';
+                    const bounds = [
+                    [-160, 15], // 
+                    [-80, 33] // no supe como sacar estas coordenadas así que fue prueba y error hasta que lo logré :(
+                    ];
+                    const map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/fernandaalpv/cksp83amb01fd17n034mhxyn1', // style URL
+                    center: [-101, 24],  // starting position [lng, lat]
+                    zoom: 3.2,// starting zoom *
+                    maxBounds:bounds, //esto hace que los bounds que indique ya no se muevan    
+                           
+                });      
+               </script> 
+
+        <!--Grafica 1 SCRIPT-->
+        <script src="js/grafica1.js"></script>
+
+        <!--Grafica 2 SCRIPT-->
+
+        <script src="js/grafica2.js"></script>
+ 
+    </body>
+</html>
